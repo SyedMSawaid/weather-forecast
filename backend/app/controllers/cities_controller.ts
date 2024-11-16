@@ -2,42 +2,42 @@ import City from '#models/city'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class CitiesController {
-  async index({ inertia }: HttpContext) {
+  async index({ response }: HttpContext) {
     const cities = await City.all()
-    return inertia.render('cities/index', { cities })
+    return response.json({ cities })
   }
 
-  async create({ inertia }: HttpContext) {
-    return inertia.render('cities/create')
+  async create({ response }: HttpContext) {
+    return response.json({ message: 'Render create city form' })
   }
 
-  async store({ request, inertia }: HttpContext) {
+  async store({ request, response }: HttpContext) {
     const data = request.only(['name', 'latitude', 'longitude'])
-    await City.create(data)
-    return inertia.location('/cities')
+    const city = await City.create(data)
+    return response.json({ city })
   }
 
-  async show({ params, inertia }: HttpContext) {
+  async show({ params, response }: HttpContext) {
     const city = await City.findOrFail(params.id)
-    return inertia.render('cities/show', { city })
+    return response.json({ city })
   }
 
-  async edit({ params, inertia }: HttpContext) {
+  async edit({ params, response }: HttpContext) {
     const city = await City.findOrFail(params.id)
-    return inertia.render('cities/edit', { city })
+    return response.json({ city })
   }
 
-  async update({ params, request, inertia }: HttpContext) {
+  async update({ params, request, response }: HttpContext) {
     const city = await City.findOrFail(params.id)
     const data = request.only(['name', 'latitude', 'longitude'])
     city.merge(data)
     await city.save()
-    return inertia.location('/cities')
+    return response.json({ city })
   }
 
-  async destroy({ params, inertia }: HttpContext) {
+  async destroy({ params, response }: HttpContext) {
     const city = await City.findOrFail(params.id)
     await city.delete()
-    return inertia.location('/cities')
+    return response.json({ message: 'City deleted successfully' })
   }
 }

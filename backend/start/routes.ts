@@ -8,9 +8,8 @@
 */
 
 import router from '@adonisjs/core/services/router'
+const CitiesController = () => import('#controllers/cities_controller')
+const CityWeatherController = () => import('#controllers/city_weather_controller')
 
-router.get('/', async () => {
-  return {
-    hello: 'world',
-  }
-})
+router.resource('cities', CitiesController)
+router.get('/cities/:id/weather', [CityWeatherController, 'create'])
