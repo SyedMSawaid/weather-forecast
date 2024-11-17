@@ -1,7 +1,8 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useCities } from "@/lib/react-query-hooks";
+import { useCities, useCreateAllCityWeather } from "@/lib/react-query-hooks";
 import {
   Cloud,
   CloudDrizzle,
@@ -11,6 +12,7 @@ import {
   Sunrise,
 } from "lucide-react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const weatherConditions: { [key: number]: string } = {
   0: "Clear sky",
@@ -30,10 +32,65 @@ const weatherConditions: { [key: number]: string } = {
   82: "Violent rain showers",
 };
 
+const getWeatherIcon = (condition: number) => {
+  switch (condition) {
+    case 0:
+    case 1:
+      return <Sun className="h-6 w-6" />;
+    case 2:
+    case 3:
+      return <Cloud className="h-6 w-6" />;
+    case 45:
+    case 48:
+      return <CloudDrizzle className="h-6 w-6" />;
+    case 51:
+    case 53:
+    case 55:
+      return <CloudDrizzle className="h-6 w-6" />;
+    case 61:
+    case 63:
+    case 65:
+    case 80:
+    case 81:
+    case 82:
+      return <CloudRain className="h-6 w-6" />;
+    default:
+      return <Sunrise className="h-6 w-6" />;
+  }
+};
+
+const getBackgroundColor = (condition: number) => {
+  switch (condition) {
+    case 0:
+    case 1:
+      return "bg-yellow-100";
+    case 2:
+    case 3:
+      return "bg-gray-100";
+    case 45:
+    case 48:
+      return "bg-gray-200";
+    case 51:
+    case 53:
+    case 55:
+      return "bg-blue-100";
+    case 61:
+    case 63:
+    case 65:
+    case 80:
+    case 81:
+    case 82:
+      return "bg-blue-200";
+    default:
+      return "bg-green-100";
+  }
+};
+
 export default function Cities() {
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { data, isLoading } = useCities();
+  const { data, isLoading, refetch } = useCities();
+  const { mutateAsync } = useCreateAllCityWeather();
 
   if (isLoading) return <div>Loading...</div>;
 
@@ -41,58 +98,10 @@ export default function Cities() {
     city.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const getWeatherIcon = (condition: number) => {
-    switch (condition) {
-      case 0:
-      case 1:
-        return <Sun className="h-6 w-6" />;
-      case 2:
-      case 3:
-        return <Cloud className="h-6 w-6" />;
-      case 45:
-      case 48:
-        return <CloudDrizzle className="h-6 w-6" />;
-      case 51:
-      case 53:
-      case 55:
-        return <CloudDrizzle className="h-6 w-6" />;
-      case 61:
-      case 63:
-      case 65:
-      case 80:
-      case 81:
-      case 82:
-        return <CloudRain className="h-6 w-6" />;
-      default:
-        return <Sunrise className="h-6 w-6" />;
-    }
-  };
-
-  const getBackgroundColor = (condition: number) => {
-    switch (condition) {
-      case 0:
-      case 1:
-        return "bg-yellow-100";
-      case 2:
-      case 3:
-        return "bg-gray-100";
-      case 45:
-      case 48:
-        return "bg-gray-200";
-      case 51:
-      case 53:
-      case 55:
-        return "bg-blue-100";
-      case 61:
-      case 63:
-      case 65:
-      case 80:
-      case 81:
-      case 82:
-        return "bg-blue-200";
-      default:
-        return "bg-green-100";
-    }
+  const fetchLatestWeather = async () => {
+    await mutateAsync();
+    refetch();
+    toast.success("New weather data fetched successfully!");
   };
 
   if (isLoading) {
@@ -103,7 +112,7 @@ export default function Cities() {
     <div className="min-h-screen bg-gradient-to-b from-blue-100 to-blue-200 p-4 sm:p-8">
       <div className="mx-auto max-w-4xl">
         <h1 className="mb-8 text-center text-4xl font-bold text-blue-800">
-          Weather App
+          Baywa.re
         </h1>
         <div className="mb-6 flex items-center rounded-lg bg-white p-2 shadow-md">
           <Search className="mr-2 h-5 w-5 text-gray-400" />
@@ -114,6 +123,9 @@ export default function Cities() {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="flex-grow border-none bg-transparent text-lg focus:outline-none focus:ring-0"
           />
+          <Button className="ml-2" onClick={fetchLatestWeather}>
+            Fetch Latest Weather
+          </Button>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filteredCities?.map((city) => (

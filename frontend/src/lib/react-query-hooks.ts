@@ -1,7 +1,9 @@
 import { CityCreatePayload, CityUpdatePayload } from "@/types/city";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
+  createAllCityWeather,
   createCity,
+  createCityWeather,
   fetchCities,
   fetchCityById,
   removeCity,
@@ -41,5 +43,19 @@ export const useUpdateCity = (cityId: number) => {
     mutationKey: ["city", cityId],
     mutationFn: (updatePayload: CityUpdatePayload) =>
       updateCity(cityId, updatePayload),
+  });
+};
+
+export const useCreateCityWeather = (cityId: number) => {
+  return useMutation({
+    mutationKey: ["city", cityId, "weather"],
+    mutationFn: () => createCityWeather(cityId),
+  });
+};
+
+export const useCreateAllCityWeather = () => {
+  return useMutation({
+    mutationKey: ["cities", "weather"],
+    mutationFn: () => createAllCityWeather(),
   });
 };
