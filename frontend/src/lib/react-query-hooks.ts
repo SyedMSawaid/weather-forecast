@@ -15,12 +15,9 @@ export const useCities = () => {
   });
 };
 
-export const useCityById = (
-  cityId: number,
-  queryKey: string[] = ["city", cityId.toString()]
-) => {
+export const useCityById = (cityId: number) => {
   return useQuery({
-    queryKey,
+    queryKey: ["city", cityId.toString()],
     queryFn: () => fetchCityById(cityId),
   });
 };
@@ -39,12 +36,10 @@ export const useRemoveCity = (cityId: number) => {
   });
 };
 
-export const useUpdateCity = (
-  cityId: number,
-  updatePayload: CityUpdatePayload
-) => {
+export const useUpdateCity = (cityId: number) => {
   return useMutation({
     mutationKey: ["city", cityId],
-    mutationFn: () => updateCity(cityId, updatePayload),
+    mutationFn: (updatePayload: CityUpdatePayload) =>
+      updateCity(cityId, updatePayload),
   });
 };
