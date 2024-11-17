@@ -37,9 +37,11 @@ export default function CityDetails() {
   if (error) return <div>Error loading city details</div>;
 
   const fetchNewWeather = async () => {
-    await mutateAsync();
-    refetch();
-    toast.success("Weather data updated");
+    toast.promise(Promise.all([mutateAsync(), refetch()]), {
+      loading: "Updating weather data...",
+      success: "Weather data updated",
+      error: "Error updating weather data",
+    });
   };
 
   return (

@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useCities, useCreateAllCityWeather } from "@/lib/react-query-hooks";
 import { weatherConditions } from "@/types/city-weather";
@@ -83,9 +84,11 @@ export default function Cities() {
   );
 
   const fetchLatestWeather = async () => {
-    await mutateAsync();
-    refetch();
-    toast.success("New weather data fetched successfully!");
+    toast.promise(Promise.all([mutateAsync(), refetch()]), {
+      loading: "Fetching new weather data...",
+      success: "New weather data fetched successfully!",
+      error: "Failed to fetch new weather data.",
+    });
   };
 
   if (isLoading) {
@@ -93,12 +96,12 @@ export default function Cities() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-blue-200 p-4 sm:p-8">
+    <div className="min-h-screen  p-4 sm:p-8">
       <div className="mx-auto max-w-4xl">
         <h1 className="mb-8 text-center text-4xl font-bold text-blue-800">
           Baywa.re
         </h1>
-        <div className="mb-6 flex items-center rounded-lg bg-white p-2 shadow-md">
+        <Card className="mb-6 flex items-center rounded-lg bg-white p-2 shadow-md">
           <Search className="mr-2 h-5 w-5 text-gray-400" />
           <Input
             type="text"
@@ -110,10 +113,10 @@ export default function Cities() {
           <Button className="ml-2" onClick={fetchLatestWeather}>
             Fetch Latest Weather
           </Button>
-        </div>
+        </Card>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filteredCities?.map((city) => (
-            <div
+            <Card
               key={city.name}
               className={`rounded-lg p-4 shadow-md transition-all duration-300 ease-in-out hover:shadow-lg ${getBackgroundColor(
                 city.weatherDatapoints[0].weatherCode
@@ -132,7 +135,7 @@ export default function Cities() {
               <p className="mt-1 text-gray-600">
                 {weatherConditions[city.weatherDatapoints[0].weatherCode]}
               </p>
-            </div>
+            </Card>
           ))}
         </div>
       </div>
