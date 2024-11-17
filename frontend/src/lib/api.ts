@@ -11,14 +11,14 @@ export const fetchCityById = async (
   cityId: number
 ): Promise<ApiResponse<CityType>> => {
   const response = await apiClient.get(`/cities/${cityId}`);
-  return response;
+  return response.data;
 };
 
 export const createCity = async (
   createPayload: CityCreatePayload
 ): Promise<ApiResponse<CityType>> => {
   const response = await apiClient.post(`/cities`, createPayload);
-  return response;
+  return response.data;
 };
 
 export const updateCity = async (
@@ -26,12 +26,12 @@ export const updateCity = async (
   updatePayload: CityUpdatePayload
 ): Promise<ApiResponse<CityType>> => {
   const response = await apiClient.put(`/cities/${cityId}`, updatePayload);
-  return response;
+  return response.data;
 };
 
 export const removeCity = async (
   cityId: number
 ): Promise<ApiResponse<CityType>> => {
   const response = await apiClient.delete(`/cities/${cityId}`);
-  return response;
+  return response.data;
 };

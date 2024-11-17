@@ -15,17 +15,20 @@ export const useCities = () => {
   });
 };
 
-export const useCityById = (cityId: number) => {
+export const useCityById = (
+  cityId: number,
+  queryKey: string[] = ["city", cityId.toString()]
+) => {
   return useQuery({
-    queryKey: ["city", cityId],
+    queryKey,
     queryFn: () => fetchCityById(cityId),
   });
 };
 
-export const useCreateCity = (createPayload: CityCreatePayload) => {
+export const useCreateCity = () => {
   return useMutation({
     mutationKey: ["city"],
-    mutationFn: () => createCity(createPayload),
+    mutationFn: (createPayload: CityCreatePayload) => createCity(createPayload),
   });
 };
 
