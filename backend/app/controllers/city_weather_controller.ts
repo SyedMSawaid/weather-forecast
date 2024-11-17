@@ -1,5 +1,6 @@
 import City from '#models/city'
 import OpenMeteoService from '#services/open_meteo_service'
+import CityWeather from '#models/city_weather'
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 
@@ -19,5 +20,29 @@ export default class CityWeatherController {
       await this.openMetro.fetchWeather(city.id, city.latitude, city.longitude)
     }
     return response.json({ message: 'New results fetched for all cities' })
+  }
+
+  public async addTag({ request, params, response }: HttpContext) {
+    const cityWeather = await CityWeather.findOrFail(params.id)
+    const data = request.only(['tag'])
+    cityWeather.tag = data.tag
+    await cityWeather.save()
+    return response.json({ message: `Tag added to city weather record with ID ${params.id}` })
+  }
+
+  public async getTags({ params, response }: HttpContext) {
+    const cityWeatherRecords = await CityWeather.query().where('city_id', params.id)
+    const uniqueTags = [
+      ...new Set(cityWeatherRecords.map((record) => record.tag).filter((tag) => tag)),
+    ]
+    return response.json({ data: uniqueTags })
+  }
+
+  public async getWeatherByTag({ request, params, response }: HttpContext) {
+    const tag = request.qs().tag || ''
+    const cityWeatherRecords = await CityWeather.query()
+      .where('city_id', params.id)
+      .andWhere('tag', tag)
+    return response.json({ data: cityWeatherRecords })
   }
 }

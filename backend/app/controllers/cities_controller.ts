@@ -9,7 +9,7 @@ export default class CitiesController {
 
   async index({ response }: HttpContext) {
     const cities = await City.query().preload('weatherDatapoints', (query) => {
-      query.orderBy('created_at', 'desc')
+      query.select('*').orderBy('created_at', 'desc').groupBy('city_id')
     })
     return response.json({ data: cities })
   }

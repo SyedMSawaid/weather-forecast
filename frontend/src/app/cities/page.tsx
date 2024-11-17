@@ -3,73 +3,12 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { WeatherIcon, WeatherText } from "@/components/weather-display";
 import { useCities, useCreateAllCityWeather } from "@/lib/react-query-hooks";
-import { weatherConditions } from "@/types/city-weather";
-import {
-  Cloud,
-  CloudDrizzle,
-  CloudRain,
-  Search,
-  Sun,
-  Sunrise,
-} from "lucide-react";
+import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
-
-const getWeatherIcon = (condition: number) => {
-  switch (condition) {
-    case 0:
-    case 1:
-      return <Sun className="h-6 w-6" />;
-    case 2:
-    case 3:
-      return <Cloud className="h-6 w-6" />;
-    case 45:
-    case 48:
-      return <CloudDrizzle className="h-6 w-6" />;
-    case 51:
-    case 53:
-    case 55:
-      return <CloudDrizzle className="h-6 w-6" />;
-    case 61:
-    case 63:
-    case 65:
-    case 80:
-    case 81:
-    case 82:
-      return <CloudRain className="h-6 w-6" />;
-    default:
-      return <Sunrise className="h-6 w-6" />;
-  }
-};
-
-const getBackgroundColor = (condition: number) => {
-  switch (condition) {
-    case 0:
-    case 1:
-      return "bg-yellow-100";
-    case 2:
-    case 3:
-      return "bg-gray-100";
-    case 45:
-    case 48:
-      return "bg-gray-200";
-    case 51:
-    case 53:
-    case 55:
-      return "bg-blue-100";
-    case 61:
-    case 63:
-    case 65:
-    case 80:
-    case 81:
-    case 82:
-      return "bg-blue-200";
-    default:
-      return "bg-green-100";
-  }
-};
 
 export default function Cities() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -84,7 +23,7 @@ export default function Cities() {
   );
 
   const fetchLatestWeather = async () => {
-    await toast.promise(Promise.all([mutateAsync()]), {
+    await toast.promise(mutateAsync(), {
       loading: "Fetching new weather data...",
       success: "New weather data fetched successfully!",
       error: "Failed to fetch new weather data.",
@@ -119,22 +58,20 @@ export default function Cities() {
           {filteredCities?.map((city) => (
             <Card
               key={city.name}
-              className={`rounded-lg p-4 shadow-md transition-all duration-300 ease-in-out hover:shadow-lg ${getBackgroundColor(
-                city.weatherDatapoints[0].weatherCode
-              )}`}
+              className="rounded-lg p-4 shadow-md transition-all duration-300 ease-in-out hover:shadow-lg"
               onClick={() => router.push(`/cities/${city.id}`)}
             >
               <div className="flex items-center justify-between">
                 <h2 className="text-xl font-semibold text-gray-800">
                   {city.name}
                 </h2>
-                {getWeatherIcon(city.weatherDatapoints[0].weatherCode)}
+                {WeatherIcon(city.weatherDatapoints[0].weatherCode)}
               </div>
               <p className="mt-2 text-3xl font-bold text-gray-900">
                 {Math.round(city.weatherDatapoints[0].temperature)}°C
               </p>
               <p className="mt-1 text-gray-600">
-                {weatherConditions[city.weatherDatapoints[0].weatherCode]}
+                {WeatherText(city.weatherDatapoints[0].weatherCode)}
               </p>
             </Card>
           ))}

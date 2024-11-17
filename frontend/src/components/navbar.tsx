@@ -14,6 +14,7 @@ export default function Navbar() {
             <span className="text-lg font-semibold">Weather App</span>
           </Link>
           <div className="flex items-center space-x-4">
+            <Link href="/visualize">Visualize</Link>
             <Button asChild variant="secondary" size="sm">
               <Link href="/cities/create">
                 <Plus className="mr-2 h-4 w-4" />

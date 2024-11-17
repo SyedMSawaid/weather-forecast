@@ -19,6 +19,9 @@ export default class CityWeather extends BaseModel {
   @column()
   declare weatherCode: number
 
+  @column()
+  declare tag: string
+
   @column.dateTime()
   declare timestamp: DateTime
 

@@ -8,6 +8,9 @@ import {
   fetchCityById,
   removeCity,
   updateCity,
+  addCityWeatherTag,
+  getCityWeatherTags,
+  getWeatherByTag,
 } from "./api";
 
 export const useCities = () => {
@@ -57,5 +60,34 @@ export const useCreateAllCityWeather = () => {
   return useMutation({
     mutationKey: ["cities", "weather"],
     mutationFn: () => createAllCityWeather(),
+  });
+};
+
+export const useAddCityWeatherTag = (cityId: number, tagId: number | null) => {
+  return useMutation({
+    mutationKey: ["cityWeather", cityId, "tag", tagId],
+    mutationFn: ({
+      cityWeatherId,
+      tag,
+    }: {
+      cityWeatherId: number;
+      tag: string;
+    }) => addCityWeatherTag(cityWeatherId, tag),
+  });
+};
+
+export const useGetCityWeatherTags = (cityId: number) => {
+  return useQuery({
+    queryKey: ["cityWeather", cityId, "tags"],
+    queryFn: () => {
+      return getCityWeatherTags(cityId);
+    },
+  });
+};
+
+export const useGetWeatherByTag = (cityId: number, tag: string) => {
+  return useQuery({
+    queryKey: ["cityWeather", cityId, "tags", tag],
+    queryFn: () => getWeatherByTag(cityId, tag),
   });
 };
