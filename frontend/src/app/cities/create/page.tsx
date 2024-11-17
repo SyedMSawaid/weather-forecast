@@ -69,7 +69,7 @@ export default function CreateCity() {
   }
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
+    <Card className="w-full max-w-2xl mx-auto mt-10">
       <CardHeader>
         <CardTitle>Create New City</CardTitle>
         <CardDescription>Add a new city to the weather app</CardDescription>
@@ -140,7 +140,7 @@ export default function CreateCity() {
         </Form>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button variant="outline" onClick={() => router.push("/")}>
+        <Button variant="outline" onClick={() => router.push("/cities")}>
           Cancel
         </Button>
         <Button

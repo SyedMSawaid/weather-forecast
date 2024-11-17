@@ -26,6 +26,7 @@ import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import { weatherConditions } from "@/types/city-weather";
 import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 export default function CityDetails() {
   const { id } = useParams();
@@ -47,19 +48,26 @@ export default function CityDetails() {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="flex justify-between">
-        <h1 className="mb-8 text-3xl font-bold text-primary">
-          {data?.data.name} Weather
-        </h1>
-        <div className="mb-4 text-right">
+      <div className="flex justify-between mb-8">
+        <div>
+          <h1 className="text-3xl font-bold text-primary">
+            {data?.data.name} Weather
+          </h1>
           <h2 className="text-2xl font-semibold">
             {Math.round(data.data.weatherDatapoints[0].temperature)}°C
           </h2>
           <p className="text-lg">
             {weatherConditions[data.data.weatherDatapoints[0].weatherCode]}
           </p>
+        </div>
 
-          <Button onClick={fetchNewWeather}>Refetch New Weather</Button>
+        <div className="mb-4 text-right">
+          <div className="flex gap-x-2">
+            <Button onClick={fetchNewWeather}>Refetch New Weather</Button>
+            <Link href={`/cities/${id}/edit`}>
+              <Button>Edit</Button>
+            </Link>
+          </div>
         </div>
       </div>
 
@@ -89,7 +97,7 @@ export default function CityDetails() {
                       sevenDaysAgo.setDate(now.getDate() - 7);
                       return date >= sevenDaysAgo && date <= now;
                     })
-                    .slice(-7)
+
                     .sort(
                       (a, b) =>
                         new Date(a.createdAt).getTime() -
@@ -102,6 +110,7 @@ export default function CityDetails() {
                       new Date(value).toLocaleDateString("en-US", {
                         month: "short",
                         day: "numeric",
+                        hour: "numeric",
                       })
                     }
                   />

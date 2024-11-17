@@ -4,13 +4,9 @@ import { DateTime } from 'luxon'
 import { fetchWeatherApi } from 'openmeteo'
 
 class OpenMeteoService {
-  private static apiUrl = 'https://api.open-meteo.com/v1/forecast'
+  private apiUrl = 'https://api.open-meteo.com/v1/forecast'
 
-  public static async fetchWeather(
-    cityId: number,
-    latitude: number,
-    longitude: number
-  ): Promise<void> {
+  public async fetchWeather(cityId: number, latitude: number, longitude: number): Promise<void> {
     try {
       const params = {
         latitude: [latitude],

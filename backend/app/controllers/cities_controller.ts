@@ -1,8 +1,12 @@
 import City from '#models/city'
 import OpenMeteoService from '#services/open_meteo_service'
+import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 
+@inject()
 export default class CitiesController {
+  constructor(protected openMetro: OpenMeteoService) {}
+
   async index({ response }: HttpContext) {
     const cities = await City.query().preload('weatherDatapoints', (query) => {
       query.orderBy('created_at', 'desc')
@@ -13,7 +17,7 @@ export default class CitiesController {
   async create({ request, response }: HttpContext) {
     const data = request.only(['name', 'latitude', 'longitude'])
     const city = await City.create(data)
-    await OpenMeteoService.fetchWeather(city.id, city.latitude, city.longitude)
+    await this.openMetro.fetchWeather(city.id, city.latitude, city.longitude)
     return response.json({ data: city, message: 'City successfully created' })
   }
 
@@ -30,7 +34,7 @@ export default class CitiesController {
     const data = request.only(['name', 'latitude', 'longitude'])
     city.merge(data)
     await city.save()
-    await OpenMeteoService.fetchWeather(city.id, city.latitude, city.longitude)
+    await this.openMetro.fetchWeather(city.id, city.latitude, city.longitude)
     return response.json({ data: city, message: 'City successfully updated' })
   }
 

@@ -79,7 +79,7 @@ export default function EditCity() {
   }
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
+    <Card className="w-full max-w-2xl mx-auto mt-10">
       <CardHeader>
         <CardTitle>Edit City</CardTitle>
         <CardDescription>
@@ -152,7 +152,7 @@ export default function EditCity() {
         </Form>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button variant="outline" onClick={() => router.push("/cities")}>
+        <Button variant="outline" onClick={() => router.push(`/cities/${id}`)}>
           Cancel
         </Button>
         <Button
