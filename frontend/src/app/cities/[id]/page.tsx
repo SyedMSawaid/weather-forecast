@@ -37,11 +37,12 @@ export default function CityDetails() {
   if (error) return <div>Error loading city details</div>;
 
   const fetchNewWeather = async () => {
-    toast.promise(Promise.all([mutateAsync(), refetch()]), {
+    await toast.promise(Promise.all([mutateAsync()]), {
       loading: "Updating weather data...",
       success: "Weather data updated",
       error: "Error updating weather data",
     });
+    refetch();
   };
 
   return (
@@ -88,7 +89,12 @@ export default function CityDetails() {
                       sevenDaysAgo.setDate(now.getDate() - 7);
                       return date >= sevenDaysAgo && date <= now;
                     })
-                    .slice(-7)}
+                    .slice(-7)
+                    .sort(
+                      (a, b) =>
+                        new Date(a.createdAt).getTime() -
+                        new Date(b.createdAt).getTime()
+                    )}
                 >
                   <XAxis
                     dataKey="createdAt"
@@ -138,7 +144,7 @@ export default function CityDetails() {
                         minute: "numeric",
                       })}
                     </TableCell>
-                    <TableCell>{day.temperature}</TableCell>
+                    <TableCell>{Math.round(day.temperature)}</TableCell>
                     <TableCell>{weatherConditions[day.weatherCode]}</TableCell>
                   </TableRow>
                 ))}

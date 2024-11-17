@@ -84,11 +84,12 @@ export default function Cities() {
   );
 
   const fetchLatestWeather = async () => {
-    toast.promise(Promise.all([mutateAsync(), refetch()]), {
+    await toast.promise(Promise.all([mutateAsync()]), {
       loading: "Fetching new weather data...",
       success: "New weather data fetched successfully!",
       error: "Failed to fetch new weather data.",
     });
+    refetch();
   };
 
   if (isLoading) {
