@@ -19,4 +19,5 @@ router.put('/cities/:id', [CitiesController, 'update'])
 router.delete('/cities/:id', [CitiesController, 'destroy'])
 
 // City Weather
-router.get('/cities/:id/weather', [CityWeatherController, 'create'])
+router.post('/cities/:id/weather', [CityWeatherController, 'create'])
+router.post('/cities/weather', [CityWeatherController, 'createAll'])

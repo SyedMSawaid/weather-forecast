@@ -1,7 +1,7 @@
 import { BaseSchema } from '@adonisjs/lucid/schema'
 
 export default class CityWeather extends BaseSchema {
-  protected tableName = 'city_weather'
+  protected tableName = 'city_weathers'
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
@@ -14,8 +14,7 @@ export default class CityWeather extends BaseSchema {
         .onDelete('CASCADE')
         .index('city_id')
       table.float('temperature')
-      table.float('humidity')
-      table.float('wind_speed')
+      table.integer('weather_code')
       table.timestamp('timestamp')
       table.timestamp('created_at')
       table.timestamp('updated_at')

@@ -15,7 +15,7 @@ class OpenMeteoService {
       const params = {
         latitude: [latitude],
         longitude: [longitude],
-        current: 'temperature_2m,relative_humidity_2m,windspeed_10m',
+        current: 'temperature_2m,weather_code',
       }
 
       const responses = await fetchWeatherApi(this.apiUrl, params)
@@ -25,12 +25,13 @@ class OpenMeteoService {
       const cityWeather = new CityWeather()
       cityWeather.cityId = cityId
       cityWeather.temperature = current.variables(0)!.value()
-      cityWeather.humidity = current.variables(1)!.value()
-      cityWeather.windSpeed = current.variables(2)!.value()
+      cityWeather.weatherCode = current.variables(1)!.value()
       cityWeather.timestamp = DateTime.now()
 
+      // TODO: Add local time
       await cityWeather.save()
     } catch (error) {
+      console.log({ error })
       logger.error('Error fetching weather data:', error)
     }
   }

@@ -35,3 +35,13 @@ export const removeCity = async (
   const response = await apiClient.delete(`/cities/${cityId}`);
   return response.data;
 };
+
+export const createCityWeather = async (cityId: number) => {
+  const response = await apiClient.post(`/cities/${cityId}/weather`);
+  return response;
+};
+
+export const createAllCityWeather = async () => {
+  const response = await apiClient.post("/cities/weather");
+  return response;
+};

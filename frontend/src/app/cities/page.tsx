@@ -12,6 +12,24 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
+const weatherConditions: { [key: number]: string } = {
+  0: "Clear sky",
+  1: "Mainly clear",
+  2: "Partly cloudy",
+  3: "Overcast",
+  45: "Foggy",
+  48: "Depositing rime fog",
+  51: "Light drizzle",
+  53: "Moderate drizzle",
+  55: "Dense drizzle",
+  61: "Slight rain",
+  63: "Moderate rain",
+  65: "Heavy rain",
+  80: "Slight rain showers",
+  81: "Moderate rain showers",
+  82: "Violent rain showers",
+};
+
 export default function Cities() {
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -23,34 +41,55 @@ export default function Cities() {
     city.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const getWeatherIcon = (condition: string) => {
-    switch (condition.toLowerCase()) {
-      case "sunny":
-      case "clear":
+  const getWeatherIcon = (condition: number) => {
+    switch (condition) {
+      case 0:
+      case 1:
         return <Sun className="h-6 w-6" />;
-      case "cloudy":
-      case "partly cloudy":
+      case 2:
+      case 3:
         return <Cloud className="h-6 w-6" />;
-      case "rainy":
-        return <CloudRain className="h-6 w-6" />;
-      case "drizzle":
+      case 45:
+      case 48:
         return <CloudDrizzle className="h-6 w-6" />;
+      case 51:
+      case 53:
+      case 55:
+        return <CloudDrizzle className="h-6 w-6" />;
+      case 61:
+      case 63:
+      case 65:
+      case 80:
+      case 81:
+      case 82:
+        return <CloudRain className="h-6 w-6" />;
       default:
         return <Sunrise className="h-6 w-6" />;
     }
   };
 
-  const getBackgroundColor = (condition: string) => {
-    switch (condition.toLowerCase()) {
-      case "sunny":
-      case "clear":
+  const getBackgroundColor = (condition: number) => {
+    switch (condition) {
+      case 0:
+      case 1:
         return "bg-yellow-100";
-      case "cloudy":
-      case "partly cloudy":
+      case 2:
+      case 3:
         return "bg-gray-100";
-      case "rainy":
-      case "drizzle":
+      case 45:
+      case 48:
+        return "bg-gray-200";
+      case 51:
+      case 53:
+      case 55:
         return "bg-blue-100";
+      case 61:
+      case 63:
+      case 65:
+      case 80:
+      case 81:
+      case 82:
+        return "bg-blue-200";
       default:
         return "bg-green-100";
     }
@@ -81,19 +120,21 @@ export default function Cities() {
             <div
               key={city.name}
               className={`rounded-lg p-4 shadow-md transition-all duration-300 ease-in-out hover:shadow-lg ${getBackgroundColor(
-                city.latitude.toString()
+                city.weatherDatapoints[0].weatherCode
               )}`}
             >
               <div className="flex items-center justify-between">
                 <h2 className="text-xl font-semibold text-gray-800">
                   {city.name}
                 </h2>
-                {getWeatherIcon(city.latitude.toString())}
+                {getWeatherIcon(city.weatherDatapoints[0].weatherCode)}
               </div>
               <p className="mt-2 text-3xl font-bold text-gray-900">
-                {city.latitude.toString()}°C
+                {Math.round(city.weatherDatapoints[0].temperature)}°C
               </p>
-              <p className="mt-1 text-gray-600">{city.latitude.toString()}</p>
+              <p className="mt-1 text-gray-600">
+                {weatherConditions[city.weatherDatapoints[0].weatherCode]}
+              </p>
             </div>
           ))}
         </div>

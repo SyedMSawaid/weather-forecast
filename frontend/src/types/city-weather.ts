@@ -2,8 +2,7 @@ export type CityWeatherType = {
   id: number;
   cityId: number;
   temperature: number;
-  humidity: number;
-  windSpeed: number;
+  weatherCode: number;
   timestamp: Date;
   createdAt: Date;
   updatedAt: Date;

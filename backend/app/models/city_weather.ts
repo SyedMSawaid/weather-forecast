@@ -17,10 +17,7 @@ export default class CityWeather extends BaseModel {
   declare temperature: number
 
   @column()
-  declare humidity: number
-
-  @column()
-  declare windSpeed: number
+  declare weatherCode: number
 
   @column.dateTime()
   declare timestamp: DateTime
