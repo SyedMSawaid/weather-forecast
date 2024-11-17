@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCities, useCreateAllCityWeather } from "@/lib/react-query-hooks";
+import { weatherConditions } from "@/types/city-weather";
 import {
   Cloud,
   CloudDrizzle,
@@ -11,26 +12,9 @@ import {
   Sun,
   Sunrise,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
-
-const weatherConditions: { [key: number]: string } = {
-  0: "Clear sky",
-  1: "Mainly clear",
-  2: "Partly cloudy",
-  3: "Overcast",
-  45: "Foggy",
-  48: "Depositing rime fog",
-  51: "Light drizzle",
-  53: "Moderate drizzle",
-  55: "Dense drizzle",
-  61: "Slight rain",
-  63: "Moderate rain",
-  65: "Heavy rain",
-  80: "Slight rain showers",
-  81: "Moderate rain showers",
-  82: "Violent rain showers",
-};
 
 const getWeatherIcon = (condition: number) => {
   switch (condition) {
@@ -88,7 +72,7 @@ const getBackgroundColor = (condition: number) => {
 
 export default function Cities() {
   const [searchTerm, setSearchTerm] = useState("");
-
+  const router = useRouter();
   const { data, isLoading, refetch } = useCities();
   const { mutateAsync } = useCreateAllCityWeather();
 
@@ -134,6 +118,7 @@ export default function Cities() {
               className={`rounded-lg p-4 shadow-md transition-all duration-300 ease-in-out hover:shadow-lg ${getBackgroundColor(
                 city.weatherDatapoints[0].weatherCode
               )}`}
+              onClick={() => router.push(`/cities/${city.id}`)}
             >
               <div className="flex items-center justify-between">
                 <h2 className="text-xl font-semibold text-gray-800">

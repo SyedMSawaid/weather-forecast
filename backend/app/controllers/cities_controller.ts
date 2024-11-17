@@ -5,7 +5,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 export default class CitiesController {
   async index({ response }: HttpContext) {
     const cities = await City.query().preload('weatherDatapoints', (query) => {
-      query.orderBy('timestamp', 'desc')
+      query.orderBy('created_at', 'desc')
     })
     return response.json({ data: cities })
   }
@@ -19,6 +19,9 @@ export default class CitiesController {
 
   async show({ params, response }: HttpContext) {
     const city = await City.findOrFail(params.id)
+    await city.load('weatherDatapoints', (query) => {
+      query.orderBy('created_at', 'desc')
+    })
     return response.json({ data: city })
   }
 
