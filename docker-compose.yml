@@ -8,7 +8,6 @@ services:
     environment:
       - TZ=UTC
       - PORT=3333
-      - HOST=localhost
       - LOG_LEVEL=info
       - APP_KEY=v1GqV_J6iFq64NPhO5tW-aYeDMg0kaXM
       - NODE_ENV=production
@@ -22,7 +21,7 @@ services:
       - "3000:3000"
     #! WE SHOULD NEVER USE HARDCODED ENV VARS, THIS IS FOR DEMO ONLY
     environment:
-      - NEXT_PUBLIC_BACKEND_BASE_URL=http://backend:3333
+      - NEXT_PUBLIC_BACKEND_BASE_URL=http://localhost:3333
     networks:
       - weather-forecast-network
     depends_on:

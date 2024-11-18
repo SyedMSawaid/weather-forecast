@@ -24,7 +24,6 @@ class OpenMeteoService {
       cityWeather.weatherCode = current.variables(1)!.value()
       cityWeather.timestamp = DateTime.now()
 
-      // TODO: Add local time
       await cityWeather.save()
     } catch (error) {
       console.log({ error })
