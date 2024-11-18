@@ -34,7 +34,6 @@ ENV LOG_LEVEL=info
 ENV NODE_ENV=production
 ENV PORT=3333
 ENV HOST=0.0.0.0
-ENV DATABASE_URL=sqlite://tmp/db/db.sqlite
 
 # Build the project first
 RUN node ace build
@@ -47,6 +46,9 @@ EXPOSE 3333
 
 # Change to the build directory and install production dependencies
 WORKDIR /app/build
+
+RUN mv /app/tmp /app/build/tmp
+
 RUN npm ci --omit=dev
 
-CMD ["node", "build/server.js"]
+CMD ["node", "bin/server.js"]
