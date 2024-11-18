@@ -13,6 +13,7 @@ import {
   getWeatherByTag,
 } from "./api";
 
+// Hook to fetch all cities
 export const useCities = () => {
   return useQuery({
     queryKey: ["city"],
@@ -20,6 +21,7 @@ export const useCities = () => {
   });
 };
 
+// Hook to fetch a city by its ID
 export const useCityById = (cityId: number) => {
   return useQuery({
     queryKey: ["city", cityId.toString()],
@@ -27,6 +29,7 @@ export const useCityById = (cityId: number) => {
   });
 };
 
+// Hook to create a city
 export const useCreateCity = () => {
   return useMutation({
     mutationKey: ["city"],
@@ -34,6 +37,7 @@ export const useCreateCity = () => {
   });
 };
 
+// Hook to remove a city
 export const useRemoveCity = (cityId: number) => {
   return useMutation({
     mutationKey: ["city", cityId],
@@ -41,6 +45,7 @@ export const useRemoveCity = (cityId: number) => {
   });
 };
 
+// Hook to update a city
 export const useUpdateCity = (cityId: number) => {
   return useMutation({
     mutationKey: ["city", cityId],
@@ -49,6 +54,7 @@ export const useUpdateCity = (cityId: number) => {
   });
 };
 
+// Hook to trigger fetching weather datapoint for a single city
 export const useCreateCityWeather = (cityId: number) => {
   return useMutation({
     mutationKey: ["city", cityId, "weather"],
@@ -56,6 +62,7 @@ export const useCreateCityWeather = (cityId: number) => {
   });
 };
 
+// Hook to trigger fetching weather datapoint for all cities
 export const useCreateAllCityWeather = () => {
   return useMutation({
     mutationKey: ["cities", "weather"],
@@ -63,6 +70,7 @@ export const useCreateAllCityWeather = () => {
   });
 };
 
+// Hook to add a tag to a city weather datapoint
 export const useAddCityWeatherTag = (cityId: number, tagId: number | null) => {
   return useMutation({
     mutationKey: ["cityWeather", cityId, "tag", tagId],
@@ -76,6 +84,7 @@ export const useAddCityWeatherTag = (cityId: number, tagId: number | null) => {
   });
 };
 
+// Hook to fetch all tags for a city weather datapoint
 export const useGetCityWeatherTags = (cityId: number) => {
   return useQuery({
     queryKey: ["cityWeather", cityId, "tags"],
@@ -85,6 +94,7 @@ export const useGetCityWeatherTags = (cityId: number) => {
   });
 };
 
+// Hook to fetch all weather datapoints for a city by tag
 export const useGetWeatherByTag = (cityId: number, tag: string) => {
   return useQuery({
     queryKey: ["cityWeather", cityId, "tags", tag],

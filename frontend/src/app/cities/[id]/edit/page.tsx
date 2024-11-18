@@ -29,6 +29,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
 
+// Define the form schema
 const formSchema = z.object({
   id: z.number(),
   name: z.string().min(2, {
@@ -67,6 +68,7 @@ export default function EditCity() {
     },
   });
 
+  // Reset the form when city data changes
   useEffect(() => {
     const data = city?.data;
     form.reset(data);

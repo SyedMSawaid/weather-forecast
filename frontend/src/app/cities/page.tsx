@@ -18,10 +18,12 @@ export default function Cities() {
 
   if (isLoading) return <div>Loading...</div>;
 
+  // Filter cities based on search term
   const filteredCities = data?.data.filter((city) =>
     city.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // Trigger fetching new weather data for all cities
   const fetchLatestWeather = async () => {
     await toast.promise(mutateAsync(), {
       loading: "Fetching new weather data...",
@@ -30,10 +32,6 @@ export default function Cities() {
     });
     refetch();
   };
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="min-h-screen  p-4 sm:p-8">

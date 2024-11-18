@@ -52,6 +52,7 @@ export default function CityDetails() {
     setEditText(e.target.value);
   };
 
+  // Handles updating the tag and refetching data
   const handleEditSubmit = async () => {
     if (editingId !== null) {
       await toast.promise(addTag({ cityWeatherId: editingId, tag: editText }), {
@@ -68,6 +69,7 @@ export default function CityDetails() {
   if (!data) return <div>No Data</div>;
   if (error) return <div>Error loading city details</div>;
 
+  // Triggers fetching of new weather datapoints and refetching data
   const fetchNewWeather = async () => {
     await toast.promise(mutateAsync(), {
       loading: "Updating weather data...",
@@ -127,8 +129,7 @@ export default function CityDetails() {
                       const sevenDaysAgo = new Date();
                       sevenDaysAgo.setDate(now.getDate() - 7);
                       return date >= sevenDaysAgo && date <= now;
-                    })
-
+                    }) // Take only the last 7 days
                     .sort(
                       (a, b) =>
                         new Date(a.createdAt).getTime() -
@@ -193,6 +194,7 @@ export default function CityDetails() {
                     </TableCell>
                     <TableCell className="w-1/4">
                       {editingId === day.id ? (
+                        // Show Input Field if Tag Text or Plus button is clicked
                         <div className="flex items-center">
                           <Input
                             value={editText}
@@ -210,6 +212,7 @@ export default function CityDetails() {
                           {day.tag}
                         </span>
                       ) : (
+                        // Show Plus button if no tag is present
                         <Plus
                           className="border rounded-full text-gray-600 text-sm"
                           onClick={() => handleEditClick(day.id, "")}

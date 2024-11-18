@@ -58,8 +58,8 @@ The backend API is built using Adonis.js. The API endpoints are as follows:
 #### Weather Management
 
 - **GET /cities/:id/weather**: Get city weather data by tag
-- **POST /cities/weather**: Create weather data for multiple cities
-- **POST /cities/:id/weather**: Create weather data for a single city
+- **POST /cities/weather**: Triggers fetching of weather data for multiple cities
+- **POST /cities/:id/weather**: Triggers fetching of weather data for a single city
 - **GET /cities/:id/weather/tags**: Get all tags for a city's weather data
 - **PUT /cities/weather/:id/tag**: Add tag to weather data
 
@@ -68,7 +68,7 @@ The backend API is built using Adonis.js. The API endpoints are as follows:
 The database models are defined using LucidORM. The database models are as following:
 
 - **City**: Represents a city in the system, with attributes such as `id`, `name`, `latitude`, `longitude`, and timestamps.
-- **CityWeather**: Represents weather data for a city, with attributes such as `id`, `cityId`, `temperature`, `weatherCode`, `tag`, `timestamp`, and timestamps.
+- **CityWeather**: Represents weather data for a city, with attributes such as `id`, `cityId`, `temperature`, `weatherCode`, `tag`, and timestamps.
 
 ### Environment Variables
 

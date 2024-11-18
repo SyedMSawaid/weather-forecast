@@ -32,6 +32,8 @@ export default function WeatherPage() {
   const { data: tags } = useGetCityWeatherTags(
     selectedCity ? parseInt(selectedCity) : 0
   );
+
+  // Fetch weather data based on selected city and tag
   const { data: weatherData } = useGetWeatherByTag(
     selectedCity ? parseInt(selectedCity) : 0,
     selectedTag

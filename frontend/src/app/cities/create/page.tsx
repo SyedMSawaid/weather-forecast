@@ -28,6 +28,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
 
+// Define a schema for the form
 const formSchema = z.object({
   name: z.string().min(2, {
     message: "City name must be at least 2 characters.",

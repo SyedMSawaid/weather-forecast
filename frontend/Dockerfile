@@ -23,10 +23,10 @@ COPY . .
 # Environment setup
 # SHOULD BE PASSED AT RUNTIME. THIS IS JUST FOR DEMO
 
-# LOCAL
+# FOR LOCAL
 ENV NEXT_PUBLIC_BACKEND_BASE_URL="http://localhost:3333"
 
-# PROD
+# FOR PROD
 # ENV NEXT_PUBLIC_BACKEND_BASE_URL="https://weather-backend.fly.dev"
 
 # Build the Next.js application
