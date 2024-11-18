@@ -135,6 +135,10 @@ Once logged in, simply run `./launch.sh` in the root of the project to deploy. T
 
 > **Note**: Ensure that the `launch.sh` script has executable permissions. You can set the executable permission using the command `chmod +x launch.sh`.
 
+Since the backend URL will likely be different, you need to edit the `frontend/fly.toml` file and replace the `NEXT_PUBLIC_BACKEND_BASE_URL` with the URL of your backend.
+
+To redeploy, navigate to the `frontend` directory and run `fly deploy --ha=false`.
+
 ## **Docker**
 
 This project can be run as a docker-compose service which will run the backend and frontend containers and it is the easiest way to run the project.
