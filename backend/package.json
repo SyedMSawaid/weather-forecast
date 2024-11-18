@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node bin/server.js && node ace scheduler:run",
     "build": "node ace build",
-    "prepare": "node ace migration:run && node ace db:seed",
+    "prepare-database": "node ace migration:run && node ace db:seed",
     "dev": "node ace serve --hmr",
     "test": "node ace test",
     "lint": "eslint .",

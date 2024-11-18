@@ -30,7 +30,7 @@ This project is a full-stack application built with Next.js (frontend) and Adoni
 
 The application can be accessed via the following URLs:
 
-- **Frontend**: `http://localhost:3000`
+- **Frontend**: https://weather-frontend.fly.dev
 - **Backend**: https://weather-backend.fly.dev
 
 > **Note**: The application might be in a sleeping state. If it doesn't respond the first time, please try again.
@@ -144,7 +144,7 @@ Once logged in, simply run `./launch.sh` in the root of the project to deploy. T
 
 > **Note**: Ensure that the `launch.sh` script has executable permissions. You can set the executable permission using the command `chmod +x launch.sh`.
 
-Since the backend URL will likely be different, you need to edit the `frontend/fly.toml` file and replace the `NEXT_PUBLIC_BACKEND_BASE_URL` with the URL of your backend.
+Since the backend URL will likely be different, you need to edit the `frontend/Dockerfile` file and replace the `NEXT_PUBLIC_BACKEND_BASE_URL` with the URL of your backend.
 
 To redeploy, navigate to the `frontend` directory and run `fly deploy --ha=false`.
 

@@ -11,9 +11,6 @@ RUN npm config set registry https://registry.npmjs.org/ \
   && npm config set fetch-retry-mintimeout 10000 \
   && npm config set fetch-retry-maxtimeout 60000
 
-# Update npm to latest version
-RUN npm install -g npm@latest
-
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
@@ -22,6 +19,15 @@ RUN npm install
 
 # Copy the rest of the application code
 COPY . .
+
+# Environment setup
+# SHOULD BE PASSED AT RUNTIME. THIS IS JUST FOR DEMO
+
+# LOCAL
+# ENV NEXT_PUBLIC_BACKEND_BASE_URL="http://localhost:3333"
+
+# PROD
+ENV NEXT_PUBLIC_BACKEND_BASE_URL="https://weather-backend.fly.dev"
 
 # Build the Next.js application
 RUN npm run build
