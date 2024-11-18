@@ -1,11 +1,9 @@
-import { ThemeProvider } from "@/components/theme-provider";
+import Navbar from "@/components/navbar";
 import ReactQueryProvider from "@/lib/react-query-provider";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./globals.css";
 import { Toaster } from "react-hot-toast";
-import Navbar from "@/components/navbar";
-
+import "./globals.css";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -34,17 +32,7 @@ export default function RootLayout({
       >
         <Navbar />
         <Toaster />
-        <ReactQueryProvider>
-          {/* <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          > */}
-
-          {children}
-          {/* </ThemeProvider> */}
-        </ReactQueryProvider>
+        <ReactQueryProvider>{children}</ReactQueryProvider>
       </body>
     </html>
   );

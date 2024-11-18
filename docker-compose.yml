@@ -23,35 +23,6 @@ services:
       - LOG_LEVEL=info
       - APP_KEY=v1GqV_J6iFq64NPhO5tW-aYeDMg0kaXM
       - NODE_ENV=production
-      - DB_HOST=db
-      - DB_PORT=5432
-      - DB_USER=postgres
-      - DB_PASSWORD=mysecretpassword
-      - DB_DATABASE=weather-forecast
-    depends_on:
-      - db
-
-  db:
-    image: postgres:15
-    container_name: postgres-db
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: mysecretpassword
-      POSTGRES_DB: weather-forecast
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    volumes:
-      - db-data:/var/lib/postgresql/data
-    networks:
-      - weather-forecast-network
-
-volumes:
-  db-data:
 
 networks:
   weather-forecast-network:
