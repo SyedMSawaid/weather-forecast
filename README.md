@@ -14,6 +14,7 @@
   - [Tools and technologies](#tools-and-technologies-1)
   - [State Management](#state-management)
     - [Features](#features)
+  - [Environment Variables](#environment-variables-1)
 - [**Development**](#development)
   - [Setting up the Project](#setting-up-the-project)
     - [Backend](#backend-1)
@@ -30,7 +31,9 @@ This project is a full-stack application built with Next.js (frontend) and Adoni
 The application can be accessed via the following URLs:
 
 - **Frontend**: `http://localhost:3000`
-- **Backend**: `http://localhost:3333`
+- **Backend**: `https://weather-backend.fly.dev`
+
+> **Note**: The application might be in a sleeping state. If it doesn't respond the first time, please try again.
 
 ## **Backend**
 
@@ -103,6 +106,12 @@ The project doesn't use a dedicated state management library. It relies on state
   - Weather data table with tagging capability
 - **Edit City (/cities/[id]/edit)**: Allows updating city information (name, latitude, longitude)
 - **Weather Visualization (/visualize)**: A dedicated page for visualizing weather data with filtering by city and tags
+
+### Environment Variables
+
+The following environment variables are used in the frontend:
+
+- **NEXT_PUBLIC_BACKEND_BASE_URL**: The base URL for the backend API
 
 ## **Development**
 
