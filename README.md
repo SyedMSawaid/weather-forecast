@@ -25,6 +25,13 @@
 
 This project is a full-stack application built with Next.js (frontend) and Adonis.js (backend). This application uses data from the [OpenMeteo API](https://open-meteo.com) for weather information. The application allows users to manage weather data, including creating, reading, updating, and deleting (CRUD) operations, as well as tagging weather data and visualizing it based on those tags.
 
+### Application URLs
+
+The application can be accessed via the following URLs:
+
+- **Frontend**: `http://localhost:3000`
+- **Backend**: `http://localhost:3333`
+
 ## **Backend**
 
 ### Tools and technologies
@@ -106,7 +113,7 @@ The project doesn't use a dedicated state management library. It relies on state
 1. Clone this repository.
 2. Navigate to the `backend` directory: `cd backend`
 3. Install dependencies: `npm install`
-4. Run migrations and data seeding with `npm run prepare`
+4. Run migrations and data seeding with `npm run prepare-database`
 5. Start the backend server using `npm run dev`
 
 #### Frontend
@@ -124,7 +131,9 @@ The applications can be run in standalone mode, docker containers or docker-comp
 
 To deploy this project to Fly.io, install the [Fly CLI tool](https://fly.io/docs/flyctl/install/) and log in using the `fly login` command.
 
-Once logged in, simply run `./deploy.sh` in the root of the project to deploy.
+Once logged in, simply run `./launch.sh` in the root of the project to deploy. The script will prompt you with a few questions, allowing you to customize your deployment experience.
+
+> **Note**: Ensure that the `launch.sh` script has executable permissions. You can set the executable permission using the command `chmod +x launch.sh`.
 
 ## **Docker**
 
