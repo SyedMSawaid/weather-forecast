@@ -1,0 +1,58 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    #! WE SHOULD NEVER USE HARDCODED ENV VARS, THIS IS FOR DEMO ONLY
+    environment:
+      - NEXT_PUBLIC_BACKEND_BASE_URL=http://backend:8000
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+    #! WE SHOULD NEVER USE HARDCODED ENV VARS, THIS IS FOR DEMO ONLY
+    environment:
+      - TZ=UTC
+      - PORT=8000
+      - HOST=localhost
+      - LOG_LEVEL=info
+      - APP_KEY=v1GqV_J6iFq64NPhO5tW-aYeDMg0kaXM
+      - NODE_ENV=production
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=mysecretpassword
+      - DB_DATABASE=weather-forecast
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    container_name: postgres-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: weather-forecast
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - weather-forecast-network
+
+volumes:
+  db-data:
+
+networks:
+  weather-forecast-network:
+    driver: bridge
