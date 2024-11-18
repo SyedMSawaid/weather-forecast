@@ -1,9 +1,9 @@
 import CityWeather from '#models/city_weather'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 
+// This seeder will create the initial weather datapoint for the seeded cities
 export default class extends BaseSeeder {
   async run() {
-    // Write your database queries inside the run method
     await CityWeather.createMany([
       {
         id: 1,

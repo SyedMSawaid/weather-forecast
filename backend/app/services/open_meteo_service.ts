@@ -16,6 +16,8 @@ class OpenMeteoService {
 
       const responses = await fetchWeatherApi(this.apiUrl, params)
       const response = responses[0]
+
+      // Get the current weather data
       const current = response.current()!
 
       const cityWeather = new CityWeather()

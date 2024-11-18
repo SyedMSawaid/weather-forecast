@@ -32,6 +32,8 @@ export default class CityWeatherController {
 
   public async getTags({ params, response }: HttpContext) {
     const cityWeatherRecords = await CityWeather.query().where('city_id', params.id)
+
+    // Filter out unique tags
     const uniqueTags = [
       ...new Set(cityWeatherRecords.map((record) => record.tag).filter((tag) => tag)),
     ]
@@ -40,6 +42,8 @@ export default class CityWeatherController {
 
   public async getWeatherByTag({ request, params, response }: HttpContext) {
     const tag = request.qs().tag || ''
+
+    // Fetch city weather records by tag
     const cityWeatherRecords = await CityWeather.query()
       .where('city_id', params.id)
       .andWhere('tag', tag)

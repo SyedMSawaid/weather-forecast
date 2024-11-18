@@ -1,6 +1,7 @@
 import City from '#models/city'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 
+// This seeder will create some cities in the database
 export default class extends BaseSeeder {
   async run() {
     await City.createMany([

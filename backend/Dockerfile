@@ -47,6 +47,7 @@ EXPOSE 3333
 # Change to the build directory and install production dependencies
 WORKDIR /app/build
 
+# Move the database to the build folder for access
 RUN mv /app/tmp /app/build/tmp
 
 RUN npm ci --omit=dev

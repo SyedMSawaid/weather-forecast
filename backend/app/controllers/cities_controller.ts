@@ -17,6 +17,8 @@ export default class CitiesController {
   async create({ request, response }: HttpContext) {
     const data = request.only(['name', 'latitude', 'longitude'])
     const city = await City.create(data)
+
+    // Fetch weather data for the city
     await this.openMetro.fetchWeather(city.id, city.latitude, city.longitude)
     return response.json({ data: city, message: 'City successfully created' })
   }
@@ -34,6 +36,8 @@ export default class CitiesController {
     const data = request.only(['name', 'latitude', 'longitude'])
     city.merge(data)
     await city.save()
+
+    // Fetch weather data for the city
     await this.openMetro.fetchWeather(city.id, city.latitude, city.longitude)
     return response.json({ data: city, message: 'City successfully updated' })
   }
