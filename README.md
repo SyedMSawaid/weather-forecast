@@ -31,7 +31,7 @@ This project is a full-stack application built with Next.js (frontend) and Adoni
 The application can be accessed via the following URLs:
 
 - **Frontend**: `http://localhost:3000`
-- **Backend**: `https://weather-backend.fly.dev`
+- **Backend**: https://weather-backend.fly.dev
 
 > **Note**: The application might be in a sleeping state. If it doesn't respond the first time, please try again.
 
