@@ -120,6 +120,12 @@ The project doesn't use a dedicated state management library. It relies on state
 
 The applications can be run in standalone mode, docker containers or docker-compose service.
 
+### Fly.io
+
+To deploy this project to Fly.io, install the [Fly CLI tool](https://fly.io/docs/flyctl/install/) and log in using the `fly login` command.
+
+Once logged in, simply run `./deploy.sh` in the root of the project to deploy.
+
 ## **Docker**
 
 This project can be run as a docker-compose service which will run the backend and frontend containers and it is the easiest way to run the project.
