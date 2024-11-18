@@ -51,4 +51,4 @@ RUN mv /app/tmp /app/build/tmp
 
 RUN npm ci --omit=dev
 
-CMD ["node", "bin/server.js"]
+CMD sh -c "node bin/server.js & node ace scheduler:run"
